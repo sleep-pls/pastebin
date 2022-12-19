@@ -17,7 +17,6 @@ function Title(){
 }
 
 function Paste(props){
-  const { TextArea } = Input;
   const [font, setFont] = useState("Plaintext");
   const handleChange = (value) => {
     setFont(value);
