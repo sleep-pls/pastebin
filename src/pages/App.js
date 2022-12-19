@@ -49,7 +49,7 @@ function Paste(props){
           ]}
         />
         <br/>
-        <TextArea placeholder='Put your paste here' id='pasteinput'/>
+        <textarea placeholder='Put your paste here' id='pasteinput'></textarea>
       </div>
     )
   }

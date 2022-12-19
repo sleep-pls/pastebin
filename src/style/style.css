@@ -39,7 +39,8 @@
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border-radius: 4px;
   border-color: lightgrey;
-  width: 886px;
+  max-width: 880px;
+  min-width: 880px;
   min-height: 100px;
 }
 #btn-upload{
