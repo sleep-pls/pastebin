@@ -1,5 +1,6 @@
 import '../style/style.css';
-import { React, useState } from 'react';
+import { React, useState, useRef} from 'react';
+import Editor from "@monaco-editor/react";
 import copy from 'copy-to-clipboard';
 import { Button, Input, message, Upload, Select, Divider } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -14,6 +15,29 @@ function Title(){
         </div>
     </div>
   )
+}
+
+function TextEditor(props) {
+  const monacoRef = useRef(null);
+
+  function handleEditorWillMount(monaco) {
+    monaco.languages.typescript.javascriptDefaults.setEagerModelSync(true);
+  }
+
+  function handleEditorDidMount(editor, monaco) {
+    monacoRef.current = editor; 
+  }
+
+  return (
+    <Editor
+      height="30vh"
+      width="900px"
+      defaultLanguage="CPP"
+      defaultValue="// Put your paste here"
+      beforeMount={handleEditorWillMount}
+      onMount={handleEditorDidMount}
+    />
+  );
 }
 
 function Paste(props){
@@ -48,7 +72,8 @@ function Paste(props){
           ]}
         />
         <br/>
-        <textarea placeholder='Put your paste here' id='pasteinput'></textarea>
+        {/* <textarea placeholder='Put your paste here' id='pasteinput'></textarea> */}
+        <TextEditor placeholder='Put your paste here' id='pasteinput' lan={Select}/>
       </div>
     )
   }
