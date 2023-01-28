@@ -1,6 +1,6 @@
 import '../style/style.css';
 import { React, useState, useRef} from 'react';
-import Editor from "@monaco-editor/react";
+import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
 import copy from 'copy-to-clipboard';
 import { Button, Input, message, Upload, Select, Divider } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -27,13 +27,13 @@ function TextEditor(props) {
   function handleEditorDidMount(editor, monaco) {
     monacoRef.current = editor; 
   }
-
+  console.log(props.lan)
   return (
     <Editor
       height="30vh"
       width="900px"
-      defaultLanguage="CPP"
-      defaultValue="// Put your paste here"
+      defaultLanguage={props.lan}
+      // defaultValue="// Put your paste here"
       beforeMount={handleEditorWillMount}
       onMount={handleEditorDidMount}
     />
@@ -41,7 +41,7 @@ function TextEditor(props) {
 }
 
 function Paste(props){
-  const [font, setFont] = useState("Plaintext");
+  const [font, setFont] = useState("Plain");
   const handleChange = (value) => {
     setFont(value);
   };
@@ -49,31 +49,41 @@ function Paste(props){
   if(props.type === "text"){
     return(
       <div>
+        <div id="info" style={{margin: '10px'}}>
+          Put your paste below.
+        </div>
         <Select
-          defaultValue={font} id="select" style={{ width: '80px', margin: '7px'}}
+          defaultValue={font} id="select" style={{ width: '100px', margin: '7px'}}
           onChange={handleChange}
           options={[
             {
-              value: 'Plaintext',
+              value: 'plaintext',
               label: 'Plain',
             },
             {
-              value: 'JavaScript',
+              value: 'cpp',
+              label: 'C++',
+            },
+            {
+              value: 'javascript',
               label: 'JS',
             },
             {
-              value: 'C++',
-              label: 'CPP',
+              value: 'css',
+              label: 'CSS',
             },
             {
-              value: 'C#',
-              label: 'C#',
-            }
+              value: 'html',
+              label: 'HTML',
+            },
+            {
+              value: 'python',
+              label: 'Python',
+            },
           ]}
         />
         <br/>
-        {/* <textarea placeholder='Put your paste here' id='pasteinput'></textarea> */}
-        <TextEditor placeholder='Put your paste here' id='pasteinput' lan={Select}/>
+        <TextEditor placeholder='Put your paste here' id='pasteinput' lan={font}/>
       </div>
     )
   }
